@@ -7,9 +7,11 @@ const storeMessage = (messageBody, author, room) => {
   var msgid = 'msg:' + dateID;
   var rooms = 'room:' + room;
   console.log('msgid', msgid);
+  // store msg info
   redisClient.hmset(
     msgid,'content', messageBody, 'author', author, 'room', room, 'date', dateID
   );
+  // store where msgid is located in which room. Assuming that the roomname is unique
   redisClient.lpush(rooms, msgid, (err, result) => {
     console.log("result", result)
   });
