@@ -1,0 +1,50 @@
+
+
+
+      <h1 id="heading">SUPER CHAT</h1>
+
+
+
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Only Chatroom</th>
+            </tr>
+          </thead>
+          <tbody class="insert">
+            {{#each messages}}
+            <tr>
+              <td>
+                <strong>{{this.author}}: </strong>
+                {{this.content}}
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+
+      <div>
+        <form action="/" method="post">
+          <div>
+            <label for="message">New Message</label>
+            <textarea class="form-control" placeholder="Message" id="message" name="message"></textarea>
+          </div>
+
+            <button type="submit">Send</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+<script>
+  var socket = io.connect('http://localhost:3000');
+  socket.on('message', function(message, user) {
+    $('.table > tbody:last-child').append(`<tr> <td> <strong> ${user} </strong> </td> <td> ${message}</td></tr>`)
+  });
+</script>
